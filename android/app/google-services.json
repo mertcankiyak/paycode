@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "666984086676",
+    "project_id": "paycode-ff909",
+    "storage_bucket": "paycode-ff909.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:666984086676:android:6879963a424a8b7f880881",
+        "android_client_info": {
+          "package_name": "com.example.paycode"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "666984086676-nmsm5d45m1vcdjnq0m8rlio971ordd1i.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCSQSwDVJwCK1D7mnJFdw9_6lHjWohYux4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "666984086676-nmsm5d45m1vcdjnq0m8rlio971ordd1i.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
