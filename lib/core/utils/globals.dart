@@ -19,12 +19,12 @@ CustomTheme lightTheme = CustomTheme(
   themeData: ThemeData(
     textTheme: TextTheme(
       headline1: TextStyle(
-          color: ConstantColors.blackColor,
-          fontSize: 45,
+          color: ConstantColors.softBlackColor,
+          fontSize: 30,
           fontWeight: FontWeight.bold,
           fontFamily: GoogleFonts.ubuntu().fontFamily),
       headline2: TextStyle(
-          color: ConstantColors.blackColor,
+          color: ConstantColors.softGrey,
           fontSize: 16,
           fontFamily: GoogleFonts.ubuntu().fontFamily),
       headline3: TextStyle(
@@ -37,26 +37,27 @@ CustomTheme lightTheme = CustomTheme(
           fontSize: 16,
           fontFamily: GoogleFonts.ubuntu().fontFamily),
       headline5: TextStyle(
-          color: ConstantColors.blackColor,
-          fontSize: 13,
+          color: ConstantColors.softGrey,
+          fontSize: 15,
           fontFamily: GoogleFonts.ubuntu().fontFamily),
       headline6: TextStyle(
-          color: ConstantColors.darkGreen,
+          color: ConstantColors.softBlackColor,
           fontWeight: FontWeight.bold,
           fontSize: 20,
           fontFamily: GoogleFonts.ubuntu().fontFamily),
       bodyText1: TextStyle(
-          color: ConstantColors.blackColor,
-          fontSize: 15,
+          color: ConstantColors.productNameColor,
+          fontSize: 20,
+          fontWeight: FontWeight.bold,
           fontFamily: GoogleFonts.ubuntu().fontFamily),
       bodyText2: TextStyle(
-          color: ConstantColors.blackColor,
-          fontSize: 16,
+          color: ConstantColors.bottomBarGreenIconColor,
+          fontSize: 18,
           fontWeight: FontWeight.bold,
           fontFamily: GoogleFonts.ubuntu().fontFamily),
       subtitle1: TextStyle(
-          color: ConstantColors.blackColor,
-          fontSize: 16,
+          color: Colors.white,
+          fontSize: 20,
           fontWeight: FontWeight.bold,
           fontFamily: GoogleFonts.ubuntu().fontFamily),
     ),
