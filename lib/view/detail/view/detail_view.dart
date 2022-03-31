@@ -27,7 +27,6 @@ class _DetailViewState extends State<DetailView> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     generateAppBarColor();
   }
@@ -216,28 +215,6 @@ class _DetailViewState extends State<DetailView> {
                       style: theme.themeData!.textTheme.headline2,
                     ),
                   ),
-                  Stack(
-                    children: [
-                      Container(
-                        width: 50,
-                        height: 50,
-                        decoration: BoxDecoration(
-                            border: Border.all(width: 5, color: Colors.grey),
-                            borderRadius:
-                                BorderRadius.all(Radius.circular(50))),
-                      ),
-                      Positioned(
-                        child: Container(
-                          width: 50,
-                          height: 50,
-                          decoration: BoxDecoration(
-                              border: Border.all(width: 5, color: Colors.red),
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(50))),
-                        ),
-                      ),
-                    ],
-                  ),
                 ],
               ),
             ),
@@ -245,7 +222,7 @@ class _DetailViewState extends State<DetailView> {
               bottom: 0,
               child: Container(
                 decoration: BoxDecoration(
-                  borderRadius: BorderRadius.only(
+                  borderRadius: const BorderRadius.only(
                       topLeft: Radius.circular(15),
                       topRight: Radius.circular(15)),
                   boxShadow: [

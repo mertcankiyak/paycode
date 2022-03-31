@@ -33,8 +33,8 @@ CustomTheme lightTheme = CustomTheme(
           fontWeight: FontWeight.bold,
           fontFamily: GoogleFonts.ubuntu().fontFamily),
       headline4: TextStyle(
-          color: ConstantColors.blackColor,
-          fontSize: 16,
+          color: ConstantColors.softBlackColor,
+          fontSize: 15,
           fontFamily: GoogleFonts.ubuntu().fontFamily),
       headline5: TextStyle(
           color: ConstantColors.softGrey,
