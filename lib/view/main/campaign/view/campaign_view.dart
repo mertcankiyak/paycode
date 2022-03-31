@@ -23,7 +23,7 @@ class _CampaingViewState extends State<CampaingView> {
           padding: context.mediumPadding,
           child: Text(
             "Kampanyalar",
-            style: theme!.themeData!.textTheme.headline1,
+            style: theme!.themeData!.textTheme.headline6,
             maxLines: 1,
           ),
         ),
