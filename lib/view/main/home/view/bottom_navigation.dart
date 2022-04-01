@@ -3,6 +3,7 @@ import 'package:paycode/core/constants/colors.dart';
 import 'package:paycode/core/init/theme/theme_notifier.dart';
 import 'package:paycode/view/main/barcode/view/barcode_view.dart';
 import 'package:paycode/view/main/basket/view/basket_view.dart';
+import 'package:paycode/view/main/basket/viewmodel/basket_viewmodel.dart';
 import 'package:paycode/view/main/campaign/view/campaign_view.dart';
 import 'package:paycode/view/main/home/view/home_view.dart';
 import 'package:paycode/view/main/profile/view/profile_view.dart';
@@ -36,7 +37,7 @@ class _BottomNavigationState extends State<BottomNavigation> {
   @override
   Widget build(BuildContext context) {
     final theme = Provider.of<ThemeNotifier>(context).customTheme;
-
+    final _basketViewModel = Provider.of<BasketViewModel>(context);
     return SafeArea(
       child: Scaffold(
         backgroundColor: ConstantColors.bodyColor,
@@ -118,12 +119,31 @@ class _BottomNavigationState extends State<BottomNavigation> {
                               selectedItem.selectedItemText = "Sepetim";
                             });
                           },
-                          icon: Icon(
-                            Icons.shopping_basket,
-                            size: 30,
-                            color: selectedItem.selectedItemIndex == 2
-                                ? ConstantColors.softBlackColor
-                                : ConstantColors.softPurple,
+                          icon: Stack(
+                            overflow: Overflow.visible,
+                            children: [
+                              Icon(
+                                Icons.shopping_basket,
+                                size: 30,
+                                color: selectedItem.selectedItemIndex == 2
+                                    ? ConstantColors.softBlackColor
+                                    : ConstantColors.softPurple,
+                              ),
+                              _basketViewModel.productCount > 0
+                                  ? Positioned(
+                                      right: -10,
+                                      top: -10,
+                                      child: CircleAvatar(
+                                          backgroundColor:
+                                              ConstantColors.productAddColor,
+                                          radius: 11,
+                                          child: Text(
+                                            "${_basketViewModel.productCount}",
+                                            style: theme!
+                                                .themeData!.textTheme.headline3,
+                                          )))
+                                  : Container(),
+                            ],
                           ),
                         ),
                         IconButton(

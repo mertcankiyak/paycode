@@ -60,6 +60,11 @@ CustomTheme lightTheme = CustomTheme(
           fontSize: 20,
           fontWeight: FontWeight.bold,
           fontFamily: GoogleFonts.ubuntu().fontFamily),
+      subtitle2: TextStyle(
+          color: ConstantColors.softBlackColor,
+          fontSize: 17,
+          fontWeight: FontWeight.bold,
+          fontFamily: GoogleFonts.ubuntu().fontFamily),
     ),
     appBarTheme: AppBarTheme(backgroundColor: Color(0xff1e2027)),
     //colorScheme: ColorScheme.fromSwatch(primarySwatch: Colors.blue),

@@ -4,36 +4,28 @@ import 'package:paycode/core/constants/colors.dart';
 import 'package:paycode/core/constants/size.dart';
 import 'package:paycode/core/extensions/size_extension.dart';
 import 'package:paycode/core/init/theme/theme_notifier.dart';
+import 'package:paycode/view/main/basket/model/basket_model.dart';
+import 'package:paycode/view/main/basket/viewmodel/basket_viewmodel.dart';
+import 'package:paycode/view/main/home/model/product_model.dart';
 import 'package:provider/provider.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class DetailView extends StatefulWidget {
-  String? fotoLink;
-  DetailView({Key? key, this.fotoLink}) : super(key: key);
+  ProductModel? productModel;
+  DetailView({Key? key, this.productModel}) : super(key: key);
 
   @override
   State<DetailView> createState() => _DetailViewState();
 }
 
 class _DetailViewState extends State<DetailView> {
-  Color backColor = ConstantColors.bodyColor;
-  late PaletteGenerator _generator;
-
-  void generateAppBarColor() async {
-    _generator = await PaletteGenerator.fromImageProvider(
-        NetworkImage(widget.fotoLink!));
-    backColor = _generator.dominantColor!.color;
-    setState(() {});
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    generateAppBarColor();
-  }
+  List<SepetModel> sepetListem = [];
+  int _urunSecimSayisi = 1;
 
   @override
   Widget build(BuildContext context) {
     final theme = Provider.of<ThemeNotifier>(context).customTheme;
+    final _basketViewModel = Provider.of<BasketViewModel>(context);
     return SafeArea(
       child: Scaffold(
         body: Stack(
@@ -48,14 +40,14 @@ class _DetailViewState extends State<DetailView> {
                       boxShadow: [
                         BoxShadow(
                           color: Colors.grey.withOpacity(0.1),
-                          spreadRadius: 1,
+                          spreadRadius: 4,
                           blurRadius: 10,
                           offset:
                               const Offset(0, 1), // changes position of shadow
                         ),
                       ],
-                      color: backColor.withOpacity(0.1),
-                      borderRadius: BorderRadius.only(
+                      color: Colors.white,
+                      borderRadius: const BorderRadius.only(
                         bottomLeft: Radius.circular(75),
                         bottomRight: Radius.circular(75),
                       ),
@@ -74,7 +66,7 @@ class _DetailViewState extends State<DetailView> {
                               child: Padding(
                                 padding: context.mediumPadding,
                                 child: Container(
-                                  decoration: BoxDecoration(
+                                  decoration: const BoxDecoration(
                                     color: Colors.white,
                                     borderRadius: BorderRadius.all(
                                       Radius.circular(10),
@@ -93,7 +85,7 @@ class _DetailViewState extends State<DetailView> {
                             Padding(
                               padding: context.mediumPadding,
                               child: Container(
-                                decoration: BoxDecoration(
+                                decoration: const BoxDecoration(
                                   color: Colors.white,
                                   borderRadius: BorderRadius.all(
                                     Radius.circular(10),
@@ -111,9 +103,9 @@ class _DetailViewState extends State<DetailView> {
                           ],
                         ),
                         Hero(
-                            tag: widget.fotoLink!,
+                            tag: widget.productModel!.urunFoto!,
                             child: Image.network(
-                              widget.fotoLink!,
+                              widget.productModel!.urunFoto!,
                               width: context.getWidth,
                               height: context.getHeight * 0.25,
                             )),
@@ -124,7 +116,7 @@ class _DetailViewState extends State<DetailView> {
                     padding: context.spesificPadding(SizeConstants.mediumSize,
                         0, SizeConstants.mediumSize, SizeConstants.mediumSize),
                     child: Text(
-                      "Eti Gofret",
+                      widget.productModel!.urunAdi!,
                       style: theme!.themeData!.textTheme.headline1,
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
@@ -136,7 +128,7 @@ class _DetailViewState extends State<DetailView> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
-                          "385 kCal",
+                          widget.productModel!.urunKalori!,
                           style: theme.themeData!.textTheme.headline5,
                         ),
                         Row(
@@ -152,10 +144,16 @@ class _DetailViewState extends State<DetailView> {
                                           ConstantColors.productDecreaseLeft,
                                           ConstantColors.productDecreaseRight,
                                         ]),
-                                    borderRadius:
-                                        BorderRadius.all(Radius.circular(50))),
+                                    borderRadius: const BorderRadius.all(
+                                        Radius.circular(50))),
                                 child: IconButton(
-                                    onPressed: () {},
+                                    onPressed: () {
+                                      if (_urunSecimSayisi > 1) {
+                                        setState(() {
+                                          _urunSecimSayisi -= 1;
+                                        });
+                                      }
+                                    },
                                     icon: Icon(
                                       Icons.keyboard_arrow_down,
                                       color: ConstantColors
@@ -168,7 +166,7 @@ class _DetailViewState extends State<DetailView> {
                             ),
                             Container(
                               child: Text(
-                                "1",
+                                "$_urunSecimSayisi",
                                 style: theme.themeData!.textTheme.headline6,
                               ),
                             ),
@@ -186,11 +184,15 @@ class _DetailViewState extends State<DetailView> {
                                           ConstantColors.productIncreaseLeft,
                                           ConstantColors.productIncreaseRight,
                                         ]),
-                                    borderRadius:
-                                        BorderRadius.all(Radius.circular(50))),
+                                    borderRadius: const BorderRadius.all(
+                                        Radius.circular(50))),
                                 child: IconButton(
-                                    onPressed: () {},
-                                    icon: Icon(
+                                    onPressed: () {
+                                      setState(() {
+                                        _urunSecimSayisi += 1;
+                                      });
+                                    },
+                                    icon: const Icon(
                                       Icons.keyboard_arrow_up,
                                       color: Colors.white,
                                     )),
@@ -211,7 +213,7 @@ class _DetailViewState extends State<DetailView> {
                   Padding(
                     padding: context.mediumPadding,
                     child: Text(
-                      "Eti Çikolatalı Gofret, hoşbeş lezzetiyle sizlerle! Var dedirten en iyi çikolatalı gofret olma yolunda hızla ilerleyen bu lezzete karşı koyamayacksınız. İçerisinde %14 oranında fındık içeren kreması, incecik gofreti ve eşşisz Eti kalitesiyle tek paket halinde sizlerle.",
+                      widget.productModel!.urunAciklama!,
                       style: theme.themeData!.textTheme.headline2,
                     ),
                   ),
@@ -252,27 +254,36 @@ class _DetailViewState extends State<DetailView> {
                             style: theme.themeData!.textTheme.headline2,
                           ),
                           Text(
-                            "14,99 TL",
+                            "${widget.productModel!.urunFiyat!} TL",
                             style: theme.themeData!.textTheme.headline1,
                           )
                         ],
                       ),
-                      Container(
-                        decoration: BoxDecoration(
-                            gradient: LinearGradient(
-                                begin: Alignment.centerLeft,
-                                end: Alignment.centerRight,
-                                colors: [
-                                  ConstantColors.productIncreaseLeft,
-                                  ConstantColors.productIncreaseRight,
-                                ]),
-                            borderRadius:
-                                BorderRadius.all(Radius.circular(10))),
-                        child: Padding(
-                          padding: context.mediumPadding,
-                          child: Text(
-                            "Sepete Ekle",
-                            style: theme.themeData!.textTheme.subtitle1,
+                      GestureDetector(
+                        onTap: () {
+                          SepetModel sp1 = SepetModel(
+                              urunID: widget.productModel!.urunId,
+                              urundenKacAdetVar: _urunSecimSayisi,
+                              urununKendisi: widget.productModel);
+                          _basketViewModel.urunekle(gelenUrun: sp1);
+                        },
+                        child: Container(
+                          decoration: BoxDecoration(
+                              gradient: LinearGradient(
+                                  begin: Alignment.centerLeft,
+                                  end: Alignment.centerRight,
+                                  colors: [
+                                    ConstantColors.productIncreaseLeft,
+                                    ConstantColors.productIncreaseRight,
+                                  ]),
+                              borderRadius: const BorderRadius.all(
+                                  const Radius.circular(10))),
+                          child: Padding(
+                            padding: context.mediumPadding,
+                            child: Text(
+                              "Sepete Ekle",
+                              style: theme.themeData!.textTheme.subtitle1,
+                            ),
                           ),
                         ),
                       ),
