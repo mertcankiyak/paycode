@@ -117,7 +117,9 @@ class _OrderDetailViewState extends State<OrderDetailView> {
                   padding: context.mediumPadding,
                   child: Text(
                     "Toplam Tutar " +
-                        widget.orderDetail!.siparisTutar.toString() +
+                        double.parse(widget.orderDetail!.siparisTutar!)
+                            .toStringAsFixed(2)
+                            .toString() +
                         " TL",
                     style: TextStyle(
                         color: ConstantColors.softBlackColor,

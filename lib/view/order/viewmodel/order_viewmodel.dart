@@ -8,9 +8,9 @@ class OrderViewModel with ChangeNotifier implements OrderBASE {
   OrderService _orderService = locator<OrderService>();
 
   @override
-  Future<List<OrderModel>> getOrderList() async {
+  Future<List<OrderModel>> getOrderList({String? userId}) async {
     try {
-      return await _orderService.getOrderList();
+      return await _orderService.getOrderList(userId: userId);
     } catch (e) {
       throw "Get Order List Error: " + e.toString();
     }

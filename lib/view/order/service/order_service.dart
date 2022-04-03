@@ -7,10 +7,12 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 class OrderService implements OrderBASE {
   final FirebaseFirestore _firebaseFirestore = FirebaseFirestore.instance;
   @override
-  Future<List<OrderModel>> getOrderList() async {
+  Future<List<OrderModel>> getOrderList({String? userId}) async {
     try {
-      QuerySnapshot<Map<String, dynamic>> veri =
-          await _firebaseFirestore.collection("siparisler").get();
+      QuerySnapshot<Map<String, dynamic>> veri = await _firebaseFirestore
+          .collection("siparisler")
+          .where("kullanici_id", isEqualTo: userId)
+          .get();
 
       debugPrint("Veri servis içerisi " +
           OrderModel.maptoList(map: veri).length.toString());

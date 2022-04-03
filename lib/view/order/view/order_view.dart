@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:paycode/core/constants/colors.dart';
 import 'package:paycode/core/init/theme/theme_notifier.dart';
+import 'package:paycode/view/authenticate/login/viewmodel/login_viewmodel.dart';
 import 'package:paycode/view/order/model/order_model.dart';
 import 'package:paycode/view/order/view/order_detail_view.dart';
 import 'package:paycode/view/order/viewmodel/order_viewmodel.dart';
@@ -20,6 +21,7 @@ class _OrderViewState extends State<OrderView> {
   @override
   Widget build(BuildContext context) {
     final _orderViewModel = Provider.of<OrderViewModel>(context);
+    final _loginViewModel = Provider.of<LoginViewModel>(context);
     final theme = Provider.of<ThemeNotifier>(context).customTheme;
     return SafeArea(
       child: Scaffold(
@@ -39,7 +41,8 @@ class _OrderViewState extends State<OrderView> {
           ),
         ),
         body: FutureBuilder(
-          future: _orderViewModel.getOrderList(),
+          future: _orderViewModel.getOrderList(
+              userId: _loginViewModel.loginModel!.id),
           builder: (BuildContext context,
               AsyncSnapshot<List<OrderModel>> snapshots) {
             if (snapshots.hasData) {
@@ -67,7 +70,9 @@ class _OrderViewState extends State<OrderView> {
                                     .data![index].siparisTarih.dateTimeaCevir,
                             style: theme.themeData!.textTheme.headline5),
                         trailing: Text(
-                            snapshots.data![index].siparisTutar.toString() +
+                            double.parse(snapshots.data![index].siparisTutar!)
+                                    .toStringAsFixed(2)
+                                    .toString() +
                                 " TL",
                             style: theme.themeData!.textTheme.bodyText2),
                         leading: CircleAvatar(

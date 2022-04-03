@@ -44,6 +44,6 @@ class ProductModel {
         urunFoto = map['urun_foto'],
         urunAciklama = map['urun_aciklama'],
         urunKalori = map['urun_kalori'],
-        urunManset = map['urun_manset'],
+        urunManset = map['manset'],
         tarih = map['tarih'];
 }

@@ -68,7 +68,8 @@ class _ProfileViewState extends State<ProfileView> {
                         CircleAvatar(
                           radius: 35,
                           child: Text(
-                            "M",
+                            _loginViewModel.registerFirestoreModel.name!
+                                .substring(0, 1),
                             style: TextStyle(fontSize: 25),
                           ),
                         ),
@@ -76,7 +77,9 @@ class _ProfileViewState extends State<ProfileView> {
                           height: context.getHeight * 0.01,
                         ),
                         Text(
-                          "Mert Can Kıyak",
+                          _loginViewModel.registerFirestoreModel.name! +
+                              " " +
+                              _loginViewModel.registerFirestoreModel.surname!,
                           style: theme.themeData!.textTheme.headline6,
                           maxLines: 1,
                         ),
@@ -91,7 +94,7 @@ class _ProfileViewState extends State<ProfileView> {
                         ),
                         Expanded(
                           child: Text(
-                            "mertcankiyak6@gmail.com",
+                            _loginViewModel.registerFirestoreModel.email!,
                             style: theme.themeData!.textTheme.headline4,
                             maxLines: 3,
                             overflow: TextOverflow.ellipsis,
