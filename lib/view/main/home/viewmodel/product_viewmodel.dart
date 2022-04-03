@@ -24,4 +24,13 @@ class ProductViewModel with ChangeNotifier implements ProductBASE {
       throw "Product View Model getNewProducts Error: " + e.toString();
     }
   }
+
+  @override
+  Future<ProductModel> getProduct({String? productCode}) async {
+    try {
+      return await _productService.getProduct(productCode: productCode);
+    } catch (e) {
+      throw "Product View Model getNewProducts Error: " + e.toString();
+    }
+  }
 }

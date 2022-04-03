@@ -55,6 +55,8 @@ dev_dependencies:
   shimmer: ^2.0.0
   fluttertoast: ^8.0.9
   palette_generator: ^0.3.3
+  uuid: ^3.0.6
+  barcode_scan2: ^4.2.0
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec

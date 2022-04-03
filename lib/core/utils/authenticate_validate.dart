@@ -4,7 +4,6 @@ import 'package:paycode/core/extensions/string_extensions.dart';
 
 class AuthenticateValidationMixin {
   String? lengthControl(String? value) {
-    debugPrint("email kontrol kısmına gelindi");
     if (value!.length > 0) {
       return null;
     } else {

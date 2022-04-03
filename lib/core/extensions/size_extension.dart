@@ -19,4 +19,17 @@ extension SizeExtension on BuildContext {
   EdgeInsets spesificPadding(
           double top, double bottom, double left, double right) =>
       EdgeInsets.only(top: top, bottom: bottom, right: right, left: left);
+
+  EdgeInsets get listProductMediumPadding => EdgeInsets.only(
+      left: SizeConstants.mediumSize,
+      bottom: SizeConstants.mediumSize,
+      right: SizeConstants.mediumSize);
+  EdgeInsets get listProductMinimumPadding => EdgeInsets.only(
+      left: SizeConstants.mediumSize,
+      bottom: SizeConstants.minimumSize,
+      right: SizeConstants.mediumSize);
+  EdgeInsets get boxProductMinimumPadding => EdgeInsets.only(
+      left: SizeConstants.mediumSize,
+      bottom: SizeConstants.minimumSize,
+      right: SizeConstants.mediumSize);
 }

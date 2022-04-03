@@ -32,4 +32,17 @@ class ProductService implements ProductBASE {
       throw "Product Service getNewProducts Error: " + e.toString();
     }
   }
+
+  @override
+  Future<ProductModel> getProduct({String? productCode}) async {
+    try {
+      QuerySnapshot<Map<String, dynamic>> productsMap = await _firebaseFirestore
+          .collection("urunler")
+          .where("urun_barkod", isEqualTo: productCode)
+          .get();
+      return ProductModel.fromMap(productsMap.docs[0].data());
+    } catch (e) {
+      throw "Product Service getNewProducts Error: " + e.toString();
+    }
+  }
 }

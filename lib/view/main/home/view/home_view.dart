@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:paycode/core/components/cards/product_box_card.dart';
+import 'package:paycode/core/components/cards/product_list_card.dart';
 import 'package:paycode/core/components/textfield/search_text_field.dart';
 import 'package:paycode/core/constants/colors.dart';
 import 'package:paycode/core/constants/size.dart';
 import 'package:paycode/core/funcs/toast_message.dart';
 import 'package:paycode/core/init/theme/theme_notifier.dart';
+import 'package:paycode/view/authenticate/login/viewmodel/login_viewmodel.dart';
+import 'package:paycode/view/authenticate/register/model/register_model.dart';
+import 'package:paycode/view/authenticate/register/viewmodel/register_viewmodel.dart';
 import 'package:paycode/view/detail/view/detail_view.dart';
 import 'package:paycode/view/main/home/model/product_model.dart';
 import 'package:paycode/view/main/home/viewmodel/product_viewmodel.dart';
@@ -51,6 +55,7 @@ class _HomeViewState extends State<HomeView> with TickerProviderStateMixin {
   Widget build(BuildContext context) {
     final theme = Provider.of<ThemeNotifier>(context).customTheme;
     final _productViewModel = Provider.of<ProductViewModel>(context);
+    final _loginViewModel = Provider.of<LoginViewModel>(context);
     return ListView(
       children: [
         Padding(
@@ -66,7 +71,7 @@ class _HomeViewState extends State<HomeView> with TickerProviderStateMixin {
                     style: theme!.themeData!.textTheme.headline2,
                   ),
                   Text(
-                    "Mert Can Kıyak",
+                    _loginViewModel.registerFirestoreModel.email!.split("@")[0],
                     style: theme.themeData!.textTheme.headline6,
                   ),
                 ],
@@ -128,78 +133,9 @@ class _HomeViewState extends State<HomeView> with TickerProviderStateMixin {
                     shrinkWrap: true,
                     itemCount: snapshots.data!.length,
                     itemBuilder: (BuildContext context, int index) {
-                      return Padding(
-                        padding: context.mediumPadding,
-                        child: Container(
-                          width: context.getWidth,
-                          height: context.getHeight * 0.1,
-                          decoration: BoxDecoration(
-                            boxShadow: [
-                              BoxShadow(
-                                color: Colors.grey.withOpacity(0.1),
-                                spreadRadius: 1,
-                                blurRadius: 10,
-                                offset: const Offset(
-                                    0, 1), // changes position of shadow
-                              ),
-                            ],
-                          ),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Expanded(
-                                child: Row(
-                                  children: [
-                                    Container(
-                                      width: context.getWidth * 0.2,
-                                      height: context.getWidth * 0.15,
-                                      decoration: BoxDecoration(
-                                          color: ConstantColors.softGrey
-                                              .withOpacity(0.1),
-                                          borderRadius: const BorderRadius.all(
-                                              Radius.circular(10))),
-                                      child: Padding(
-                                        padding: context.minimumPadding,
-                                        child: Image.network(
-                                            snapshots.data![index].urunFoto!),
-                                      ),
-                                    ),
-                                    SizedBox(
-                                      width: SizeConstants.minimumSize,
-                                    ),
-                                    Expanded(
-                                      child: Column(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          Text(
-                                            snapshots.data![index].urunAdi!,
-                                            style: theme
-                                                .themeData!.textTheme.headline6,
-                                            maxLines: 2,
-                                            overflow: TextOverflow.ellipsis,
-                                          ),
-                                          SizedBox(
-                                            height: SizeConstants.minimumSize,
-                                          ),
-                                          Text(snapshots.data![index].urunTur!,
-                                              style: theme.themeData!.textTheme
-                                                  .headline2),
-                                        ],
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              Text(
-                                "${snapshots.data![index].urunFiyat!} TL",
-                                style: theme.themeData!.textTheme.bodyText2,
-                              ),
-                            ],
-                          ),
-                        ),
+                      return ProductCardList(
+                        key: ValueKey(index),
+                        productModel: snapshots.data![index],
                       );
                     });
               } else {

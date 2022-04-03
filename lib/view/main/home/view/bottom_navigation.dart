@@ -1,13 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:paycode/core/constants/colors.dart';
 import 'package:paycode/core/init/theme/theme_notifier.dart';
+import 'package:paycode/view/detail/view/detail_view.dart';
 import 'package:paycode/view/main/barcode/view/barcode_view.dart';
 import 'package:paycode/view/main/basket/view/basket_view.dart';
 import 'package:paycode/view/main/basket/viewmodel/basket_viewmodel.dart';
 import 'package:paycode/view/main/campaign/view/campaign_view.dart';
+import 'package:paycode/view/main/home/model/product_model.dart';
 import 'package:paycode/view/main/home/view/home_view.dart';
+import 'package:paycode/view/main/home/viewmodel/product_viewmodel.dart';
 import 'package:paycode/view/main/profile/view/profile_view.dart';
 import 'package:provider/provider.dart';
+import 'package:barcode_scan2/barcode_scan2.dart';
 
 class BottomNavigation extends StatefulWidget {
   @override
@@ -38,6 +42,7 @@ class _BottomNavigationState extends State<BottomNavigation> {
   Widget build(BuildContext context) {
     final theme = Provider.of<ThemeNotifier>(context).customTheme;
     final _basketViewModel = Provider.of<BasketViewModel>(context);
+    final _productViewModel = Provider.of<ProductViewModel>(context);
     return SafeArea(
       child: Scaffold(
         backgroundColor: ConstantColors.bodyColor,
@@ -99,16 +104,32 @@ class _BottomNavigationState extends State<BottomNavigation> {
                                 : ConstantColors.softPurple,
                           ),
                         ),
-                        Container(
-                          decoration: BoxDecoration(
-                              color: ConstantColors.bottomBarGreenIconColor,
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(100))),
-                          child: Padding(
-                            padding: const EdgeInsets.all(14.0),
-                            child: Image.asset(
-                              "assets/images/barcode-scanner.png",
-                              scale: 18,
+                        GestureDetector(
+                          onTap: () async {
+                            ScanResult scanning = await BarcodeScanner.scan();
+                            String okunanKod = scanning.rawContent;
+                            ProductModel gelenProduct = await _productViewModel
+                                .getProduct(productCode: okunanKod);
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => DetailView(
+                                  productModel: gelenProduct,
+                                ),
+                              ),
+                            );
+                          },
+                          child: Container(
+                            decoration: BoxDecoration(
+                                color: ConstantColors.bottomBarGreenIconColor,
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(100))),
+                            child: Padding(
+                              padding: const EdgeInsets.all(14.0),
+                              child: Image.asset(
+                                "assets/images/barcode-scanner.png",
+                                scale: 18,
+                              ),
                             ),
                           ),
                         ),

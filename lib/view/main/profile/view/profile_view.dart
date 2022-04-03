@@ -3,7 +3,13 @@ import 'package:paycode/core/components/textfield/text_field.dart';
 import 'package:paycode/core/constants/colors.dart';
 import 'package:paycode/core/constants/size.dart';
 import 'package:paycode/core/extensions/size_extension.dart';
+import 'package:paycode/core/funcs/toast_message.dart';
 import 'package:paycode/core/init/theme/theme_notifier.dart';
+import 'package:paycode/view/authenticate/login/viewmodel/login_viewmodel.dart';
+import 'package:paycode/view/authenticate/register/model/register_model.dart';
+import 'package:paycode/view/authenticate/register/viewmodel/register_viewmodel.dart';
+import 'package:paycode/view/main/profile/viewmodel/profile_viewmodel.dart';
+import 'package:paycode/view/order/view/order_view.dart';
 import 'package:provider/provider.dart';
 
 class ProfileView extends StatefulWidget {
@@ -18,6 +24,8 @@ class _ProfileViewState extends State<ProfileView> {
   @override
   Widget build(BuildContext context) {
     final theme = Provider.of<ThemeNotifier>(context).customTheme;
+    final _profileViewModel = Provider.of<ProfileViewModel>(context);
+    final _loginViewModel = Provider.of<LoginViewModel>(context);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -94,118 +102,138 @@ class _ProfileViewState extends State<ProfileView> {
                   ),
                 ),
               ),
-              Padding(
-                padding: context.minimumPadding,
-                child: Container(
-                  decoration: BoxDecoration(
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.grey.withOpacity(0.2),
-                        spreadRadius: 1,
-                        blurRadius: 10,
-                        offset: Offset(0, 1), // changes position of shadow
-                      ),
-                    ],
-                    color: Colors.white,
-                    borderRadius: BorderRadius.all(
-                      Radius.circular(
-                        5,
+              GestureDetector(
+                onTap: () {
+                  _profileViewModel.resetPassword(
+                      email: _loginViewModel.loginModel!.email);
+                  ToastMessage.show(
+                      title:
+                          "Şifre sıfırlama linki mail adresinize gönderildi!");
+                },
+                child: Padding(
+                  padding: context.minimumPadding,
+                  child: Container(
+                    decoration: BoxDecoration(
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.grey.withOpacity(0.2),
+                          spreadRadius: 1,
+                          blurRadius: 10,
+                          offset: Offset(0, 1), // changes position of shadow
+                        ),
+                      ],
+                      color: Colors.white,
+                      borderRadius: BorderRadius.all(
+                        Radius.circular(
+                          5,
+                        ),
                       ),
                     ),
+                    child: Padding(
+                        padding: context.mediumPadding,
+                        child: Row(
+                          children: [
+                            Icon(
+                              Icons.lock,
+                              color: ConstantColors.bottomBarGreenIconColor,
+                            ),
+                            SizedBox(
+                              width: 10,
+                            ),
+                            Text(
+                              "Şifreni Güncelle",
+                              style: theme.themeData!.textTheme.headline4,
+                            ),
+                          ],
+                        )),
                   ),
-                  child: Padding(
-                      padding: context.mediumPadding,
-                      child: Row(
-                        children: [
-                          Icon(
-                            Icons.lock,
-                            color: ConstantColors.bottomBarGreenIconColor,
-                          ),
-                          SizedBox(
-                            width: 10,
-                          ),
-                          Text(
-                            "Şifreni Güncelle",
-                            style: theme.themeData!.textTheme.headline4,
-                          ),
-                        ],
-                      )),
                 ),
               ),
-              Padding(
-                padding: context.minimumPadding,
-                child: Container(
-                  decoration: BoxDecoration(
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.grey.withOpacity(0.2),
-                        spreadRadius: 1,
-                        blurRadius: 10,
-                        offset: Offset(0, 1), // changes position of shadow
-                      ),
-                    ],
-                    color: Colors.white,
-                    borderRadius: BorderRadius.all(
-                      Radius.circular(
-                        5,
+              GestureDetector(
+                onTap: () {
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => OrderView()));
+                },
+                child: Padding(
+                  padding: context.minimumPadding,
+                  child: Container(
+                    decoration: BoxDecoration(
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.grey.withOpacity(0.2),
+                          spreadRadius: 1,
+                          blurRadius: 10,
+                          offset: Offset(0, 1), // changes position of shadow
+                        ),
+                      ],
+                      color: Colors.white,
+                      borderRadius: BorderRadius.all(
+                        Radius.circular(
+                          5,
+                        ),
                       ),
                     ),
+                    child: Padding(
+                        padding: context.mediumPadding,
+                        child: Row(
+                          children: [
+                            Icon(
+                              Icons.history,
+                              color: ConstantColors.bottomBarGreenIconColor,
+                            ),
+                            SizedBox(
+                              width: 10,
+                            ),
+                            Text(
+                              "Geçmiş Siparişlerim",
+                              style: theme.themeData!.textTheme.headline4,
+                            ),
+                          ],
+                        )),
                   ),
-                  child: Padding(
-                      padding: context.mediumPadding,
-                      child: Row(
-                        children: [
-                          Icon(
-                            Icons.history,
-                            color: ConstantColors.bottomBarGreenIconColor,
-                          ),
-                          SizedBox(
-                            width: 10,
-                          ),
-                          Text(
-                            "Geçmiş Siparişlerim",
-                            style: theme.themeData!.textTheme.headline4,
-                          ),
-                        ],
-                      )),
                 ),
               ),
-              Padding(
-                padding: context.minimumPadding,
-                child: Container(
-                  decoration: BoxDecoration(
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.grey.withOpacity(0.2),
-                        spreadRadius: 1,
-                        blurRadius: 10,
-                        offset: Offset(0, 1), // changes position of shadow
-                      ),
-                    ],
-                    color: Colors.white,
-                    borderRadius: BorderRadius.all(
-                      Radius.circular(
-                        5,
+              GestureDetector(
+                onTap: () {
+                  _loginViewModel.signOut();
+                },
+                child: Padding(
+                  padding: context.minimumPadding,
+                  child: Container(
+                    decoration: BoxDecoration(
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.grey.withOpacity(0.2),
+                          spreadRadius: 1,
+                          blurRadius: 10,
+                          offset: Offset(0, 1), // changes position of shadow
+                        ),
+                      ],
+                      color: Colors.white,
+                      borderRadius: BorderRadius.all(
+                        Radius.circular(
+                          5,
+                        ),
                       ),
                     ),
+                    child: Padding(
+                        padding: context.mediumPadding,
+                        child: Row(
+                          children: [
+                            Icon(
+                              Icons.logout,
+                              color: ConstantColors.bottomBarGreenIconColor,
+                            ),
+                            SizedBox(
+                              width: 10,
+                            ),
+                            Text(
+                              "Çıkış Yap",
+                              style: theme.themeData!.textTheme.headline4,
+                            ),
+                          ],
+                        )),
                   ),
-                  child: Padding(
-                      padding: context.mediumPadding,
-                      child: Row(
-                        children: [
-                          Icon(
-                            Icons.logout,
-                            color: ConstantColors.bottomBarGreenIconColor,
-                          ),
-                          SizedBox(
-                            width: 10,
-                          ),
-                          Text(
-                            "Çıkış Yap",
-                            style: theme.themeData!.textTheme.headline4,
-                          ),
-                        ],
-                      )),
                 ),
               ),
             ],

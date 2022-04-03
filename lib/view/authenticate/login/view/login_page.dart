@@ -6,6 +6,7 @@ import 'package:paycode/core/extensions/size_extension.dart';
 import 'package:paycode/core/init/theme/theme_notifier.dart';
 import 'package:paycode/core/utils/authenticate_validate.dart';
 import 'package:paycode/view/authenticate/login/viewmodel/login_viewmodel.dart';
+import 'package:paycode/view/authenticate/register/view/register_view.dart';
 import 'package:provider/provider.dart';
 import 'package:shimmer/shimmer.dart';
 
@@ -19,12 +20,13 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage>
     with AuthenticateValidationMixin {
   GlobalKey<FormState> _formkey = GlobalKey();
+
+  TextEditingController _emailController = TextEditingController();
+  TextEditingController _passwordController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     final _theme = Provider.of<ThemeNotifier>(context).customTheme;
     final _authViewModel = Provider.of<LoginViewModel>(context);
-    TextEditingController _emailController = TextEditingController();
-    TextEditingController _passwordController = TextEditingController();
     return Scaffold(
       resizeToAvoidBottomInset: false,
       backgroundColor: ConstantColors.bodyColor,
@@ -108,7 +110,10 @@ class _LoginPageState extends State<LoginPage>
                     color: ConstantColors.bodyColor,
                   ),
                   onTap: () {
-                    //Navigator.push(context, MaterialPageRoute(builder: (context)=>RegisterPage()));
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => RegisterView()));
                   },
                 ),
               ),

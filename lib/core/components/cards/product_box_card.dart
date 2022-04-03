@@ -49,7 +49,7 @@ class _ProductCardBoxState extends State<ProductCardBox>
     final theme = Provider.of<ThemeNotifier>(context).customTheme;
     final _basketViewModel = Provider.of<BasketViewModel>(context);
     return Padding(
-      padding: context.mediumPadding,
+      padding: context.boxProductMinimumPadding,
       child: Row(
         children: [
           InkWell(

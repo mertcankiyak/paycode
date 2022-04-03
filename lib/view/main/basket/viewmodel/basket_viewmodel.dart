@@ -98,4 +98,10 @@ class BasketViewModel with ChangeNotifier {
     productCount = sepetListem.length;
     notifyListeners();
   }
+
+  void orderComplete() {
+    amount = 0;
+    sepetListem = [];
+    productCount = 0;
+  }
 }

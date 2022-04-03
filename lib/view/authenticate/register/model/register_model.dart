@@ -6,11 +6,7 @@ class RegisterFirestoreModel {
   String? email;
   String? id;
 
-  RegisterFirestoreModel(
-      {required this.name,
-      required this.surname,
-      required this.email,
-      required this.id});
+  RegisterFirestoreModel({this.name, this.surname, this.email, this.id});
 
   RegisterFirestoreModel.fromMap(Map<String, dynamic> gelenMap)
       : name = gelenMap["kullanici_adi"],

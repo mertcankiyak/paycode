@@ -1,12 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:paycode/core/components/textfield/credit_card.dart';
 import 'package:paycode/core/components/textfield/text_field.dart';
 import 'package:paycode/core/constants/colors.dart';
 import 'package:paycode/core/constants/size.dart';
 import 'package:paycode/core/extensions/size_extension.dart';
+import 'package:paycode/core/funcs/toast_message.dart';
 import 'package:paycode/core/init/theme/theme_notifier.dart';
+import 'package:paycode/view/authenticate/login/viewmodel/login_viewmodel.dart';
 import 'package:paycode/view/main/basket/model/basket_model.dart';
 import 'package:paycode/view/main/basket/viewmodel/basket_viewmodel.dart';
+import 'package:paycode/view/order/model/order_model.dart';
+import 'package:paycode/view/order/viewmodel/order_viewmodel.dart';
 import 'package:provider/provider.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:uuid/uuid.dart';
 
 class BasketView extends StatefulWidget {
   const BasketView({Key? key}) : super(key: key);
@@ -15,11 +22,16 @@ class BasketView extends StatefulWidget {
   State<BasketView> createState() => _BasketViewState();
 }
 
-class _BasketViewState extends State<BasketView> {
+class _BasketViewState extends State<BasketView> with CreditCardValidator {
+  TextEditingController _creditCardText = TextEditingController();
+  TextEditingController _creditCardDateText = TextEditingController();
+  TextEditingController _creditCvvText = TextEditingController();
+  GlobalKey<FormState> _globalKey = GlobalKey();
   @override
   Widget build(BuildContext context) {
     final theme = Provider.of<ThemeNotifier>(context).customTheme;
     final _basketViewModel = Provider.of<BasketViewModel>(context);
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -274,22 +286,35 @@ class _BasketViewState extends State<BasketView> {
                                   )
                                 ],
                               ),
-                              Container(
-                                decoration: BoxDecoration(
-                                    gradient: LinearGradient(
-                                        begin: Alignment.centerLeft,
-                                        end: Alignment.centerRight,
-                                        colors: [
-                                          ConstantColors.productIncreaseLeft,
-                                          ConstantColors.productIncreaseRight,
-                                        ]),
-                                    borderRadius:
-                                        BorderRadius.all(Radius.circular(10))),
-                                child: Padding(
-                                  padding: context.mediumPadding,
-                                  child: Text(
-                                    "Ödeme Yap",
-                                    style: theme.themeData!.textTheme.subtitle1,
+                              Material(
+                                borderRadius: BorderRadius.circular(10),
+                                type: MaterialType.transparency,
+                                elevation: 6.0,
+                                child: Ink(
+                                  decoration: BoxDecoration(
+                                      gradient: LinearGradient(
+                                          begin: Alignment.centerLeft,
+                                          end: Alignment.centerRight,
+                                          colors: [
+                                            ConstantColors.productIncreaseLeft,
+                                            ConstantColors.productIncreaseRight,
+                                          ]),
+                                      borderRadius: const BorderRadius.all(
+                                          Radius.circular(10))),
+                                  child: InkWell(
+                                    splashColor: ConstantColors.softBlackColor,
+                                    borderRadius: BorderRadius.circular(10),
+                                    onTap: () {
+                                      showModelDialog();
+                                    },
+                                    child: Padding(
+                                      padding: context.mediumPadding,
+                                      child: Text(
+                                        "Ödeme Yap",
+                                        style: theme
+                                            .themeData!.textTheme.subtitle1,
+                                      ),
+                                    ),
                                   ),
                                 ),
                               ),
@@ -313,5 +338,131 @@ class _BasketViewState extends State<BasketView> {
               ),
       ],
     );
+  }
+
+  void showModelDialog() {
+    final theme =
+        Provider.of<ThemeNotifier>(context, listen: false).customTheme;
+    final _loginViewModel = Provider.of<LoginViewModel>(context, listen: false);
+    final _basketViewModel =
+        Provider.of<BasketViewModel>(context, listen: false);
+    final _orderViewModel = Provider.of<OrderViewModel>(context, listen: false);
+    showModalBottomSheet(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(10.0),
+        ),
+        isScrollControlled: true,
+        context: context,
+        builder: (context) {
+          return Padding(
+            padding: MediaQuery.of(context).viewInsets,
+            child: Form(
+              key: _globalKey,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisSize: MainAxisSize.min,
+                children: <Widget>[
+                  CreditCardTextFormField(
+                    hintText: "Kredi Kartı Numaranız",
+                    icon: Icon(Icons.credit_card),
+                    textEditingController: _creditCardText,
+                    validator: creditCardNumberControl,
+                    maxLength: 16,
+                  ),
+                  CreditCardTextFormField(
+                    hintText: "Son Kullanma Tarihi",
+                    icon: Icon(Icons.calendar_today),
+                    textEditingController: _creditCardDateText,
+                    validator: creditCardDateControl,
+                    maxLength: 4,
+                  ),
+                  CreditCardTextFormField(
+                    hintText: "Güvenlik Kodu (CVV)",
+                    icon: Icon(Icons.code),
+                    textEditingController: _creditCvvText,
+                    validator: creditCardCVVControl,
+                    maxLength: 3,
+                  ),
+                  Material(
+                    borderRadius: BorderRadius.circular(10),
+                    type: MaterialType.transparency,
+                    elevation: 6.0,
+                    child: Ink(
+                      width: context.getWidth,
+                      decoration: BoxDecoration(
+                          gradient: LinearGradient(
+                              begin: Alignment.centerLeft,
+                              end: Alignment.centerRight,
+                              colors: [
+                                ConstantColors.bottomBarGreenIconColor
+                                    .withOpacity(0.8),
+                                ConstantColors.bottomBarGreenIconColor
+                                    .withOpacity(0.9),
+                              ]),
+                          borderRadius:
+                              const BorderRadius.all(Radius.circular(10))),
+                      child: InkWell(
+                        splashColor: ConstantColors.softBlackColor,
+                        borderRadius: BorderRadius.circular(10),
+                        onTap: () async {
+                          var uuid = Uuid();
+                          _globalKey.currentState!.save();
+                          if (_globalKey.currentState!.validate()) {
+                            List<Map<String, dynamic>> siparisDetayMap = [];
+
+                            _basketViewModel.sepetListem.forEach((element) {
+                              siparisDetayMap.add(OrderDetail()
+                                  .orderDetailtoMap(model: element));
+                            });
+
+                            OrderModel siparis = OrderModel(
+                                kullaniciId: _loginViewModel.loginModel!.id,
+                                orderDetails: siparisDetayMap,
+                                siparisId: uuid.v4(),
+                                siparisTarih: Timestamp.now(),
+                                siparisTutar:
+                                    _basketViewModel.amount.toString());
+                            await _orderViewModel
+                                .completeOrder(order: siparis)
+                                .then((value) {
+                              if (value == true) {
+                                ToastMessage.show(
+                                    title: "Ödeme İşlemi Tamamlandı!");
+                                _basketViewModel.orderComplete();
+                                Navigator.pop(context);
+                              }
+                            });
+                          }
+                        },
+                        child: Padding(
+                          padding: context.mediumPadding,
+                          child: Text(
+                            "Ödemeyi Onayla",
+                            style: theme!.themeData!.textTheme.headline3,
+                            textAlign: TextAlign.center,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          );
+        });
+  }
+}
+
+class CreditCardValidator {
+  String? creditCardNumberControl(String? value) {
+    return value!.length != 16 ? "Geçersiz Kart Numarası" : null;
+  }
+
+  String? creditCardDateControl(String? value) {
+    return value!.length != 4 ? "Geçersiz Tarih" : null;
+  }
+
+  String? creditCardCVVControl(String? value) {
+    return value!.length != 3 ? "Geçersiz CVV" : null;
   }
 }

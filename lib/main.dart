@@ -6,10 +6,14 @@ import 'package:paycode/core/utils/globals.dart';
 import 'package:paycode/locator.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:paycode/view/authenticate/login/viewmodel/login_viewmodel.dart';
+import 'package:paycode/view/authenticate/register/model/register_model.dart';
+import 'package:paycode/view/authenticate/register/viewmodel/register_viewmodel.dart';
 import 'package:paycode/view/landing/landing_page.dart';
 import 'package:paycode/view/main/basket/viewmodel/basket_viewmodel.dart';
 import 'package:paycode/view/main/campaign/viewmodel/campaign_viewmodel.dart';
 import 'package:paycode/view/main/home/viewmodel/product_viewmodel.dart';
+import 'package:paycode/view/main/profile/viewmodel/profile_viewmodel.dart';
+import 'package:paycode/view/order/viewmodel/order_viewmodel.dart';
 import 'package:provider/provider.dart';
 
 void main() async {
@@ -48,6 +52,15 @@ class MyApp extends StatelessWidget {
         ),
         ChangeNotifierProvider<CampaignViewModel>(
           create: (context) => CampaignViewModel(),
+        ),
+        ChangeNotifierProvider<ProfileViewModel>(
+          create: (context) => ProfileViewModel(),
+        ),
+        ChangeNotifierProvider<RegisterViewModel>(
+          create: (context) => RegisterViewModel(),
+        ),
+        ChangeNotifierProvider<OrderViewModel>(
+          create: (context) => OrderViewModel(),
         ),
       ],
       child: MaterialApp(
