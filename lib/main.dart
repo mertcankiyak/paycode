@@ -6,7 +6,6 @@ import 'package:paycode/core/utils/globals.dart';
 import 'package:paycode/locator.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:paycode/view/authenticate/login/viewmodel/login_viewmodel.dart';
-import 'package:paycode/view/authenticate/register/model/register_model.dart';
 import 'package:paycode/view/authenticate/register/viewmodel/register_viewmodel.dart';
 import 'package:paycode/view/landing/landing_page.dart';
 import 'package:paycode/view/main/basket/viewmodel/basket_viewmodel.dart';
