@@ -71,7 +71,7 @@ class _HomeViewState extends State<HomeView> with TickerProviderStateMixin {
                     style: theme!.themeData!.textTheme.headline2,
                   ),
                   Text(
-                    _loginViewModel.registerFirestoreModel.email!.split("@")[0],
+                    _loginViewModel.registerFirestoreModel.email != null ? _loginViewModel.registerFirestoreModel.email!.split("@")[0] : "",
                     style: theme.themeData!.textTheme.headline6,
                   ),
                 ],

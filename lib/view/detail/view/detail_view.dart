@@ -5,10 +5,13 @@ import 'package:paycode/core/constants/size.dart';
 import 'package:paycode/core/extensions/size_extension.dart';
 import 'package:paycode/core/init/theme/theme_notifier.dart';
 import 'package:paycode/view/main/basket/model/basket_model.dart';
+import 'package:paycode/view/main/basket/view/basket_view.dart';
 import 'package:paycode/view/main/basket/viewmodel/basket_viewmodel.dart';
 import 'package:paycode/view/main/home/model/product_model.dart';
 import 'package:provider/provider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+
+import '../../../core/funcs/toast_message.dart';
 
 class DetailView extends StatefulWidget {
   ProductModel? productModel;
@@ -42,8 +45,7 @@ class _DetailViewState extends State<DetailView> {
                           color: Colors.grey.withOpacity(0.1),
                           spreadRadius: 4,
                           blurRadius: 10,
-                          offset:
-                              const Offset(0, 1), // changes position of shadow
+                          offset: const Offset(0, 1), // changes position of shadow
                         ),
                       ],
                       color: Colors.white,
@@ -82,24 +84,29 @@ class _DetailViewState extends State<DetailView> {
                                 ),
                               ),
                             ),
-                            Padding(
-                              padding: context.mediumPadding,
-                              child: Container(
-                                decoration: const BoxDecoration(
-                                  color: Colors.white,
-                                  borderRadius: BorderRadius.all(
-                                    Radius.circular(10),
+                            /* GestureDetector(
+                              onTap: () {
+                                Navigator.push(context, MaterialPageRoute(builder: (context) => BasketView()));
+                              },
+                              child: Padding(
+                                padding: context.mediumPadding,
+                                child: Container(
+                                  decoration: const BoxDecoration(
+                                    color: Colors.white,
+                                    borderRadius: BorderRadius.all(
+                                      Radius.circular(10),
+                                    ),
                                   ),
-                                ),
-                                child: Padding(
-                                  padding: context.minimumPadding,
-                                  child: Icon(
-                                    Icons.shopping_bag_outlined,
-                                    color: ConstantColors.productAddColor,
+                                  child: Padding(
+                                    padding: context.minimumPadding,
+                                    child: Icon(
+                                      Icons.shopping_bag_outlined,
+                                      color: ConstantColors.productAddColor,
+                                    ),
                                   ),
                                 ),
                               ),
-                            ),
+                            ),*/
                           ],
                         ),
                         Hero(
@@ -113,8 +120,8 @@ class _DetailViewState extends State<DetailView> {
                     ),
                   ),
                   Padding(
-                    padding: context.spesificPadding(SizeConstants.mediumSize,
-                        0, SizeConstants.mediumSize, SizeConstants.mediumSize),
+                    padding: context.spesificPadding(
+                        SizeConstants.mediumSize, 0, SizeConstants.mediumSize, SizeConstants.mediumSize),
                     child: Text(
                       widget.productModel!.urunAdi!,
                       style: theme!.themeData!.textTheme.headline1,
@@ -144,8 +151,7 @@ class _DetailViewState extends State<DetailView> {
                                           ConstantColors.productDecreaseLeft,
                                           ConstantColors.productDecreaseRight,
                                         ]),
-                                    borderRadius: const BorderRadius.all(
-                                        Radius.circular(50))),
+                                    borderRadius: const BorderRadius.all(Radius.circular(50))),
                                 child: IconButton(
                                     onPressed: () {
                                       if (_urunSecimSayisi > 1) {
@@ -156,8 +162,7 @@ class _DetailViewState extends State<DetailView> {
                                     },
                                     icon: Icon(
                                       Icons.keyboard_arrow_down,
-                                      color: ConstantColors
-                                          .bottomBarGreenIconColor,
+                                      color: ConstantColors.bottomBarGreenIconColor,
                                     )),
                               ),
                             ),
@@ -184,8 +189,7 @@ class _DetailViewState extends State<DetailView> {
                                           ConstantColors.productIncreaseLeft,
                                           ConstantColors.productIncreaseRight,
                                         ]),
-                                    borderRadius: const BorderRadius.all(
-                                        Radius.circular(50))),
+                                    borderRadius: const BorderRadius.all(Radius.circular(50))),
                                 child: IconButton(
                                     onPressed: () {
                                       setState(() {
@@ -224,9 +228,7 @@ class _DetailViewState extends State<DetailView> {
               bottom: 0,
               child: Container(
                 decoration: BoxDecoration(
-                  borderRadius: const BorderRadius.only(
-                      topLeft: Radius.circular(15),
-                      topRight: Radius.circular(15)),
+                  borderRadius: const BorderRadius.only(topLeft: Radius.circular(15), topRight: Radius.circular(15)),
                   boxShadow: [
                     BoxShadow(
                       color: Colors.grey.withOpacity(0.1),
@@ -266,18 +268,16 @@ class _DetailViewState extends State<DetailView> {
                               urundenKacAdetVar: _urunSecimSayisi,
                               urununKendisi: widget.productModel);
                           _basketViewModel.urunekle(gelenUrun: sp1);
+                          ToastMessage.show(title: "Ürün Sepetinze Eklendi");
                         },
                         child: Container(
                           decoration: BoxDecoration(
-                              gradient: LinearGradient(
-                                  begin: Alignment.centerLeft,
-                                  end: Alignment.centerRight,
-                                  colors: [
-                                    ConstantColors.productIncreaseLeft,
-                                    ConstantColors.productIncreaseRight,
-                                  ]),
-                              borderRadius: const BorderRadius.all(
-                                  const Radius.circular(10))),
+                              gradient:
+                                  LinearGradient(begin: Alignment.centerLeft, end: Alignment.centerRight, colors: [
+                                ConstantColors.productIncreaseLeft,
+                                ConstantColors.productIncreaseRight,
+                              ]),
+                              borderRadius: const BorderRadius.all(const Radius.circular(10))),
                           child: Padding(
                             padding: context.mediumPadding,
                             child: Text(

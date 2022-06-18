@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:paycode/core/constants/colors.dart';
 import 'package:paycode/core/components/buttons/buttons.dart';
 import 'package:paycode/core/components/textfield/text_field.dart';
-import 'package:paycode/core/constants/colors.dart';
 import 'package:paycode/core/extensions/size_extension.dart';
 import 'package:paycode/core/init/theme/theme_notifier.dart';
 import 'package:paycode/core/utils/authenticate_validate.dart';

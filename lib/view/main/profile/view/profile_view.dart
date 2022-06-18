@@ -52,8 +52,7 @@ class _ProfileViewState extends State<ProfileView> {
                         color: Colors.grey.withOpacity(0.2),
                         spreadRadius: 0,
                         blurRadius: 10,
-                        offset:
-                            const Offset(0, 1), // changes position of shadow
+                        offset: const Offset(0, 1), // changes position of shadow
                       ),
                     ],
                     borderRadius: const BorderRadius.all(
@@ -68,8 +67,9 @@ class _ProfileViewState extends State<ProfileView> {
                         CircleAvatar(
                           radius: 35,
                           child: Text(
-                            _loginViewModel.registerFirestoreModel.name!
-                                .substring(0, 1),
+                            _loginViewModel.registerFirestoreModel.name != null
+                                ? _loginViewModel.registerFirestoreModel.name!.substring(0, 1)
+                                : "",
                             style: TextStyle(fontSize: 25),
                           ),
                         ),
@@ -77,9 +77,9 @@ class _ProfileViewState extends State<ProfileView> {
                           height: context.getHeight * 0.01,
                         ),
                         Text(
-                          _loginViewModel.registerFirestoreModel.name! +
+                          (_loginViewModel.registerFirestoreModel.name ?? "") +
                               " " +
-                              _loginViewModel.registerFirestoreModel.surname!,
+                              (_loginViewModel.registerFirestoreModel.surname ?? ""),
                           style: theme.themeData!.textTheme.headline6,
                           maxLines: 1,
                         ),
@@ -94,7 +94,7 @@ class _ProfileViewState extends State<ProfileView> {
                         ),
                         Expanded(
                           child: Text(
-                            _loginViewModel.registerFirestoreModel.email!,
+                            _loginViewModel.registerFirestoreModel.email ?? "",
                             style: theme.themeData!.textTheme.headline4,
                             maxLines: 3,
                             overflow: TextOverflow.ellipsis,
@@ -107,11 +107,8 @@ class _ProfileViewState extends State<ProfileView> {
               ),
               GestureDetector(
                 onTap: () {
-                  _profileViewModel.resetPassword(
-                      email: _loginViewModel.loginModel!.email);
-                  ToastMessage.show(
-                      title:
-                          "Şifre sıfırlama linki mail adresinize gönderildi!");
+                  _profileViewModel.resetPassword(email: _loginViewModel.loginModel!.email);
+                  ToastMessage.show(title: "Şifre sıfırlama linki mail adresinize gönderildi!");
                 },
                 child: Padding(
                   padding: context.minimumPadding,
@@ -154,8 +151,7 @@ class _ProfileViewState extends State<ProfileView> {
               ),
               GestureDetector(
                 onTap: () {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => OrderView()));
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => OrderView()));
                 },
                 child: Padding(
                   padding: context.minimumPadding,

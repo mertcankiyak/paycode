@@ -87,14 +87,12 @@ class _BasketViewState extends State<BasketView> with CreditCardValidator {
                                     color: Colors.grey.withOpacity(0.1),
                                     spreadRadius: 1,
                                     blurRadius: 10,
-                                    offset: const Offset(
-                                        0, 1), // changes position of shadow
+                                    offset: const Offset(0, 1), // changes position of shadow
                                   ),
                                 ],
                               ),
                               child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                 children: [
                                   Expanded(
                                     child: Row(
@@ -102,16 +100,12 @@ class _BasketViewState extends State<BasketView> with CreditCardValidator {
                                         Container(
                                           width: context.getWidth * 0.2,
                                           height: context.getWidth * 0.15,
-                                          decoration: const BoxDecoration(
-                                              borderRadius: BorderRadius.all(
-                                                  Radius.circular(10))),
+                                          decoration:
+                                              const BoxDecoration(borderRadius: BorderRadius.all(Radius.circular(10))),
                                           child: Padding(
                                             padding: context.minimumPadding,
                                             child: Image.network(
-                                                _basketViewModel
-                                                    .sepetListem[index]
-                                                    .urununKendisi!
-                                                    .urunFoto!),
+                                                _basketViewModel.sepetListem[index].urununKendisi!.urunFoto!),
                                           ),
                                         ),
                                         SizedBox(
@@ -119,32 +113,20 @@ class _BasketViewState extends State<BasketView> with CreditCardValidator {
                                         ),
                                         Expanded(
                                           child: Column(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.center,
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
+                                            mainAxisAlignment: MainAxisAlignment.center,
+                                            crossAxisAlignment: CrossAxisAlignment.start,
                                             children: [
                                               Text(
-                                                _basketViewModel
-                                                    .sepetListem[index]
-                                                    .urununKendisi!
-                                                    .urunAdi!,
-                                                style: theme.themeData!
-                                                    .textTheme.subtitle2,
+                                                _basketViewModel.sepetListem[index].urununKendisi!.urunAdi!,
+                                                style: theme.themeData!.textTheme.subtitle2,
                                                 maxLines: 2,
                                                 overflow: TextOverflow.ellipsis,
                                               ),
                                               SizedBox(
-                                                height:
-                                                    SizeConstants.minimumSize,
+                                                height: SizeConstants.minimumSize,
                                               ),
-                                              Text(
-                                                  _basketViewModel
-                                                      .sepetListem[index]
-                                                      .urununKendisi!
-                                                      .urunTur!,
-                                                  style: theme.themeData!
-                                                      .textTheme.headline5),
+                                              Text(_basketViewModel.sepetListem[index].urununKendisi!.urunTur!,
+                                                  style: theme.themeData!.textTheme.headline5),
                                             ],
                                           ),
                                         ),
@@ -161,41 +143,28 @@ class _BasketViewState extends State<BasketView> with CreditCardValidator {
                                                   begin: Alignment.centerLeft,
                                                   end: Alignment.centerRight,
                                                   colors: [
-                                                    ConstantColors
-                                                        .productDecreaseLeft,
-                                                    ConstantColors
-                                                        .productDecreaseRight,
+                                                    ConstantColors.productDecreaseLeft,
+                                                    ConstantColors.productDecreaseRight,
                                                   ]),
-                                              borderRadius: BorderRadius.all(
-                                                  Radius.circular(50))),
+                                              borderRadius: BorderRadius.all(Radius.circular(50))),
                                           child: IconButton(
                                               onPressed: () {
                                                 SepetModel sp1 = SepetModel(
-                                                    urunID: _basketViewModel
-                                                        .sepetListem[index]
-                                                        .urunID,
+                                                    urunID: _basketViewModel.sepetListem[index].urunID,
                                                     urundenKacAdetVar: 1,
-                                                    urununKendisi:
-                                                        _basketViewModel
-                                                            .sepetListem[index]
-                                                            .urununKendisi);
-                                                _basketViewModel.urunCikar(
-                                                    gelenUrun: sp1);
+                                                    urununKendisi: _basketViewModel.sepetListem[index].urununKendisi);
+                                                _basketViewModel.urunCikar(gelenUrun: sp1);
                                               },
                                               icon: Icon(
                                                 Icons.keyboard_arrow_down,
-                                                color: ConstantColors
-                                                    .bottomBarGreenIconColor,
+                                                color: ConstantColors.bottomBarGreenIconColor,
                                               )),
                                         ),
                                       ),
                                       Container(
                                         child: Text(
-                                          _basketViewModel.sepetListem[index]
-                                              .urundenKacAdetVar
-                                              .toString(),
-                                          style: theme
-                                              .themeData!.textTheme.subtitle2,
+                                          _basketViewModel.sepetListem[index].urundenKacAdetVar.toString(),
+                                          style: theme.themeData!.textTheme.subtitle2,
                                         ),
                                       ),
                                       Transform.scale(
@@ -206,26 +175,17 @@ class _BasketViewState extends State<BasketView> with CreditCardValidator {
                                                   begin: Alignment.centerLeft,
                                                   end: Alignment.centerRight,
                                                   colors: [
-                                                    ConstantColors
-                                                        .productIncreaseLeft,
-                                                    ConstantColors
-                                                        .productIncreaseRight,
+                                                    ConstantColors.productIncreaseLeft,
+                                                    ConstantColors.productIncreaseRight,
                                                   ]),
-                                              borderRadius: BorderRadius.all(
-                                                  Radius.circular(50))),
+                                              borderRadius: BorderRadius.all(Radius.circular(50))),
                                           child: IconButton(
                                               onPressed: () {
                                                 SepetModel sp1 = SepetModel(
-                                                    urunID: _basketViewModel
-                                                        .sepetListem[index]
-                                                        .urunID,
+                                                    urunID: _basketViewModel.sepetListem[index].urunID,
                                                     urundenKacAdetVar: 1,
-                                                    urununKendisi:
-                                                        _basketViewModel
-                                                            .sepetListem[index]
-                                                            .urununKendisi);
-                                                _basketViewModel.urunekle(
-                                                    gelenUrun: sp1);
+                                                    urununKendisi: _basketViewModel.sepetListem[index].urununKendisi);
+                                                _basketViewModel.urunekle(gelenUrun: sp1);
                                               },
                                               icon: Icon(
                                                 Icons.keyboard_arrow_up,
@@ -250,16 +210,14 @@ class _BasketViewState extends State<BasketView> with CreditCardValidator {
                       bottom: 0,
                       child: Container(
                         decoration: BoxDecoration(
-                          borderRadius: const BorderRadius.only(
-                              topLeft: Radius.circular(15),
-                              topRight: Radius.circular(15)),
+                          borderRadius:
+                              const BorderRadius.only(topLeft: Radius.circular(15), topRight: Radius.circular(15)),
                           boxShadow: [
                             BoxShadow(
                               color: Colors.grey.withOpacity(0.1),
                               spreadRadius: 1,
                               blurRadius: 10,
-                              offset: const Offset(
-                                  0, 1), // changes position of shadow
+                              offset: const Offset(0, 1), // changes position of shadow
                             ),
                           ],
                           color: Colors.white,
@@ -299,8 +257,7 @@ class _BasketViewState extends State<BasketView> with CreditCardValidator {
                                             ConstantColors.productIncreaseLeft,
                                             ConstantColors.productIncreaseRight,
                                           ]),
-                                      borderRadius: const BorderRadius.all(
-                                          Radius.circular(10))),
+                                      borderRadius: const BorderRadius.all(Radius.circular(10))),
                                   child: InkWell(
                                     splashColor: ConstantColors.softBlackColor,
                                     borderRadius: BorderRadius.circular(10),
@@ -311,8 +268,7 @@ class _BasketViewState extends State<BasketView> with CreditCardValidator {
                                       padding: context.mediumPadding,
                                       child: Text(
                                         "Ödeme Yap",
-                                        style: theme
-                                            .themeData!.textTheme.subtitle1,
+                                        style: theme.themeData!.textTheme.subtitle1,
                                       ),
                                     ),
                                   ),
@@ -328,7 +284,7 @@ class _BasketViewState extends State<BasketView> with CreditCardValidator {
               )
             : Container(
                 width: context.getWidth,
-                height: context.getHeight * 0.78,
+                height: context.getHeight * 0.75,
                 child: Center(
                   child: Text(
                     "Sepetinizde Ürün Bulunmamaktadır",
@@ -341,11 +297,9 @@ class _BasketViewState extends State<BasketView> with CreditCardValidator {
   }
 
   void showModelDialog() {
-    final theme =
-        Provider.of<ThemeNotifier>(context, listen: false).customTheme;
+    final theme = Provider.of<ThemeNotifier>(context, listen: false).customTheme;
     final _loginViewModel = Provider.of<LoginViewModel>(context, listen: false);
-    final _basketViewModel =
-        Provider.of<BasketViewModel>(context, listen: false);
+    final _basketViewModel = Provider.of<BasketViewModel>(context, listen: false);
     final _orderViewModel = Provider.of<OrderViewModel>(context, listen: false);
     showModalBottomSheet(
         shape: RoundedRectangleBorder(
@@ -390,17 +344,11 @@ class _BasketViewState extends State<BasketView> with CreditCardValidator {
                     child: Ink(
                       width: context.getWidth,
                       decoration: BoxDecoration(
-                          gradient: LinearGradient(
-                              begin: Alignment.centerLeft,
-                              end: Alignment.centerRight,
-                              colors: [
-                                ConstantColors.bottomBarGreenIconColor
-                                    .withOpacity(0.8),
-                                ConstantColors.bottomBarGreenIconColor
-                                    .withOpacity(0.9),
-                              ]),
-                          borderRadius:
-                              const BorderRadius.all(Radius.circular(10))),
+                          gradient: LinearGradient(begin: Alignment.centerLeft, end: Alignment.centerRight, colors: [
+                            ConstantColors.bottomBarGreenIconColor.withOpacity(0.8),
+                            ConstantColors.bottomBarGreenIconColor.withOpacity(0.9),
+                          ]),
+                          borderRadius: const BorderRadius.all(Radius.circular(10))),
                       child: InkWell(
                         splashColor: ConstantColors.softBlackColor,
                         borderRadius: BorderRadius.circular(10),
@@ -411,8 +359,7 @@ class _BasketViewState extends State<BasketView> with CreditCardValidator {
                             List<Map<String, dynamic>> siparisDetayMap = [];
 
                             _basketViewModel.sepetListem.forEach((element) {
-                              siparisDetayMap.add(OrderDetail()
-                                  .orderDetailtoMap(model: element));
+                              siparisDetayMap.add(OrderDetail().orderDetailtoMap(model: element));
                             });
 
                             OrderModel siparis = OrderModel(
@@ -420,14 +367,10 @@ class _BasketViewState extends State<BasketView> with CreditCardValidator {
                                 orderDetails: siparisDetayMap,
                                 siparisId: uuid.v4(),
                                 siparisTarih: Timestamp.now(),
-                                siparisTutar:
-                                    _basketViewModel.amount.toString());
-                            await _orderViewModel
-                                .completeOrder(order: siparis)
-                                .then((value) {
+                                siparisTutar: _basketViewModel.amount.toString());
+                            await _orderViewModel.completeOrder(order: siparis).then((value) {
                               if (value == true) {
-                                ToastMessage.show(
-                                    title: "Ödeme İşlemi Tamamlandı!");
+                                ToastMessage.show(title: "Ödeme İşlemi Tamamlandı!");
                                 _basketViewModel.orderComplete();
                                 Navigator.pop(context);
                               }

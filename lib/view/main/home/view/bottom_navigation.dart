@@ -63,8 +63,7 @@ class _BottomNavigationState extends State<BottomNavigation> {
           child: Container(
             height: 90,
             child: IconTheme(
-              data:
-                  IconThemeData(color: Theme.of(context).colorScheme.onPrimary),
+              data: IconThemeData(color: Theme.of(context).colorScheme.onPrimary),
               child: Row(
                 mainAxisSize: MainAxisSize.max,
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -108,8 +107,7 @@ class _BottomNavigationState extends State<BottomNavigation> {
                           onTap: () async {
                             ScanResult scanning = await BarcodeScanner.scan();
                             String okunanKod = scanning.rawContent;
-                            ProductModel gelenProduct = await _productViewModel
-                                .getProduct(productCode: okunanKod);
+                            ProductModel gelenProduct = await _productViewModel.getProduct(productCode: okunanKod);
                             Navigator.push(
                               context,
                               MaterialPageRoute(
@@ -122,8 +120,7 @@ class _BottomNavigationState extends State<BottomNavigation> {
                           child: Container(
                             decoration: BoxDecoration(
                                 color: ConstantColors.bottomBarGreenIconColor,
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(100))),
+                                borderRadius: BorderRadius.all(Radius.circular(100))),
                             child: Padding(
                               padding: const EdgeInsets.all(14.0),
                               child: Image.asset(
@@ -141,7 +138,8 @@ class _BottomNavigationState extends State<BottomNavigation> {
                             });
                           },
                           icon: Stack(
-                            overflow: Overflow.visible,
+                            //overflow: Overflow.visible,
+                            clipBehavior: Clip.none,
                             children: [
                               Icon(
                                 Icons.shopping_basket,
@@ -152,16 +150,14 @@ class _BottomNavigationState extends State<BottomNavigation> {
                               ),
                               _basketViewModel.productCount > 0
                                   ? Positioned(
-                                      right: -10,
                                       top: -10,
+                                      right: -10,
                                       child: CircleAvatar(
-                                          backgroundColor:
-                                              ConstantColors.productAddColor,
+                                          backgroundColor: ConstantColors.productAddColor,
                                           radius: 11,
                                           child: Text(
                                             "${_basketViewModel.productCount}",
-                                            style: theme!
-                                                .themeData!.textTheme.headline3,
+                                            style: theme!.themeData!.textTheme.headline3,
                                           )))
                                   : Container(),
                             ],
