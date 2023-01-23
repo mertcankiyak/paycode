@@ -11,6 +11,7 @@ import 'package:paycode/view/authenticate/register/model/register_model.dart';
 import 'package:paycode/view/authenticate/register/viewmodel/register_viewmodel.dart';
 import 'package:paycode/view/detail/view/detail_view.dart';
 import 'package:paycode/view/main/home/model/product_model.dart';
+import 'package:paycode/view/main/home/view/test_page.dart';
 import 'package:paycode/view/main/home/viewmodel/product_viewmodel.dart';
 import 'package:provider/provider.dart';
 import 'package:paycode/core/extensions/size_extension.dart';
@@ -37,9 +38,7 @@ class _HomeViewState extends State<HomeView> with TickerProviderStateMixin {
       vsync: this,
     )..repeat(reverse: true);
 
-    _color = ColorTween(
-            begin: ConstantColors.productAddColor,
-            end: ConstantColors.bottomBarGreenIconColor)
+    _color = ColorTween(begin: ConstantColors.productAddColor, end: ConstantColors.bottomBarGreenIconColor)
         .animate(_controller);
 
     _controller.stop();
@@ -71,30 +70,28 @@ class _HomeViewState extends State<HomeView> with TickerProviderStateMixin {
                     style: theme!.themeData!.textTheme.headline2,
                   ),
                   Text(
-                    _loginViewModel.registerFirestoreModel.email != null ? _loginViewModel.registerFirestoreModel.email!.split("@")[0] : "",
+                    _loginViewModel.registerFirestoreModel.email != null
+                        ? _loginViewModel.registerFirestoreModel.email!.split("@")[0]
+                        : "",
                     style: theme.themeData!.textTheme.headline6,
                   ),
                 ],
               ),
-              Image.network(
-                "https://i.hizliresim.com/4bkrv2k.png",
-                scale: 10,
+              GestureDetector(
+                onTap: () {
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => TestPage()));
+                },
+                child: Image.network(
+                  "https://i.hizliresim.com/4bkrv2k.png",
+                  scale: 10,
+                ),
               ),
             ],
           ),
         ),
-        Padding(
-          padding: context.mediumSymetricPadding,
-          child: SearchTextFormField(
-            hintText: "Markette Arayın",
-            icon: Icon(Icons.search),
-            textEditingController: _searchTextController,
-          ),
-        ),
         FutureBuilder(
             future: _productViewModel.getFeaturedProducts(),
-            builder: (BuildContext context,
-                AsyncSnapshot<List<ProductModel>> snapshots) {
+            builder: (BuildContext context, AsyncSnapshot<List<ProductModel>> snapshots) {
               if (snapshots.hasData) {
                 return Container(
                   width: context.getWidth * 0.50,
@@ -116,8 +113,8 @@ class _HomeViewState extends State<HomeView> with TickerProviderStateMixin {
               }
             }),
         Padding(
-          padding: context.spesificPadding(0, SizeConstants.mediumSize,
-              SizeConstants.maximumSize, SizeConstants.maximumSize),
+          padding: context.spesificPadding(
+              0, SizeConstants.mediumSize, SizeConstants.maximumSize, SizeConstants.maximumSize),
           child: Text(
             "Yeni Eklenenler",
             style: theme.themeData!.textTheme.headline6,
@@ -125,8 +122,7 @@ class _HomeViewState extends State<HomeView> with TickerProviderStateMixin {
         ),
         FutureBuilder(
             future: _productViewModel.getNewProducts(),
-            builder: (BuildContext context,
-                AsyncSnapshot<List<ProductModel>> snapshots) {
+            builder: (BuildContext context, AsyncSnapshot<List<ProductModel>> snapshots) {
               if (snapshots.hasData) {
                 return ListView.builder(
                     physics: ScrollPhysics(),
@@ -139,7 +135,7 @@ class _HomeViewState extends State<HomeView> with TickerProviderStateMixin {
                       );
                     });
               } else {
-                return Text("Veri gelmedi");
+                return const Center(child: CircularProgressIndicator());
               }
             }),
       ],

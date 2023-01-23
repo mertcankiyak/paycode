@@ -268,7 +268,7 @@ class _DetailViewState extends State<DetailView> {
                               urundenKacAdetVar: _urunSecimSayisi,
                               urununKendisi: widget.productModel);
                           _basketViewModel.urunekle(gelenUrun: sp1);
-                          ToastMessage.show(title: "Ürün Sepetinze Eklendi");
+                          ToastMessage.show(title: "Ürün Sepetinize Eklendi");
                         },
                         child: Container(
                           decoration: BoxDecoration(

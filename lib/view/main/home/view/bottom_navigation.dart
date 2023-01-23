@@ -107,15 +107,18 @@ class _BottomNavigationState extends State<BottomNavigation> {
                           onTap: () async {
                             ScanResult scanning = await BarcodeScanner.scan();
                             String okunanKod = scanning.rawContent;
-                            ProductModel gelenProduct = await _productViewModel.getProduct(productCode: okunanKod);
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => DetailView(
-                                  productModel: gelenProduct,
+
+                            if (okunanKod.isNotEmpty) {
+                              ProductModel? gelenProduct = await _productViewModel.getProduct(productCode: okunanKod);
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => DetailView(
+                                    productModel: gelenProduct,
+                                  ),
                                 ),
-                              ),
-                            );
+                              );
+                            }
                           },
                           child: Container(
                             decoration: BoxDecoration(

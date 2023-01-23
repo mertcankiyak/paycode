@@ -41,10 +41,8 @@ class _OrderViewState extends State<OrderView> {
           ),
         ),
         body: FutureBuilder(
-          future: _orderViewModel.getOrderList(
-              userId: _loginViewModel.loginModel!.id),
-          builder: (BuildContext context,
-              AsyncSnapshot<List<OrderModel>> snapshots) {
+          future: _orderViewModel.getOrderList(userId: _loginViewModel.loginModel!.id),
+          builder: (BuildContext context, AsyncSnapshot<List<OrderModel>> snapshots) {
             if (snapshots.hasData) {
               return Card(
                 child: ListView.builder(
@@ -60,27 +58,17 @@ class _OrderViewState extends State<OrderView> {
                                         orderDetail: snapshots.data![index],
                                       )));
                         },
-                        title: Text(
-                            "Sipariş Numarası: " +
-                                snapshots.data![index].siparisId!.split("-")[0],
+                        title: Text("Sipariş Numarası: " + snapshots.data![index].siparisId!.split("-")[0],
                             style: theme.themeData!.textTheme.headline4),
-                        subtitle: Text(
-                            "Sipariş Tarihi: " +
-                                snapshots
-                                    .data![index].siparisTarih.dateTimeaCevir,
+                        subtitle: Text("Sipariş Tarihi: " + snapshots.data![index].siparisTarih.dateTimeaCevir,
                             style: theme.themeData!.textTheme.headline5),
                         trailing: Text(
-                            double.parse(snapshots.data![index].siparisTutar!)
-                                    .toStringAsFixed(2)
-                                    .toString() +
-                                " TL",
+                            double.parse(snapshots.data![index].siparisTutar!).toStringAsFixed(2).toString() + " TL",
                             style: theme.themeData!.textTheme.bodyText2),
                         leading: CircleAvatar(
-                          backgroundColor:
-                              ConstantColors.bottomBarGreenIconColor,
+                          backgroundColor: ConstantColors.bottomBarGreenIconColor,
                           child: Text(
-                            snapshots.data![index].orderDetails!.length
-                                .toString(),
+                            snapshots.data![index].orderDetails!.length.toString(),
                             style: theme.themeData!.textTheme.headline3,
                           ),
                         ),
@@ -88,7 +76,7 @@ class _OrderViewState extends State<OrderView> {
                     }),
               );
             } else {
-              return Text("Veri gelmedi");
+              return Center(child: CircularProgressIndicator());
             }
           },
         ),

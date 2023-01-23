@@ -34,7 +34,7 @@ class ProductService implements ProductBASE {
   }
 
   @override
-  Future<ProductModel> getProduct({String? productCode}) async {
+  Future<ProductModel?> getProduct({String? productCode}) async {
     try {
       QuerySnapshot<Map<String, dynamic>> productsMap = await _firebaseFirestore
           .collection("urunler")

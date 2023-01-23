@@ -17,8 +17,7 @@ class LoginPage extends StatefulWidget {
   State<LoginPage> createState() => _LoginPageState();
 }
 
-class _LoginPageState extends State<LoginPage>
-    with AuthenticateValidationMixin {
+class _LoginPageState extends State<LoginPage> with AuthenticateValidationMixin {
   GlobalKey<FormState> _formkey = GlobalKey();
 
   TextEditingController _emailController = TextEditingController();
@@ -44,9 +43,7 @@ class _LoginPageState extends State<LoginPage>
                 period: Duration(seconds: 5),
                 baseColor: Colors.green,
                 highlightColor: Colors.greenAccent,
-                child: Text('payCode',
-                    textAlign: TextAlign.center,
-                    style: _theme!.themeData!.textTheme.headline1),
+                child: Text('payCode', textAlign: TextAlign.center, style: _theme!.themeData!.textTheme.headline1),
               ),
               Text(
                 "Hızlı Alışveriş",
@@ -89,11 +86,9 @@ class _LoginPageState extends State<LoginPage>
                       _formkey.currentState!.save();
                       await _authViewModel
                           .signInWithEmail(
-                              email: _emailController.text.trim(),
-                              password: _passwordController.text.trim())
+                              email: _emailController.text.trim(), password: _passwordController.text.trim())
                           .then((value) async {
-                        await _authViewModel.girisYapmisKullaniciBilgileriniCek(
-                            email: _emailController.text);
+                        await _authViewModel.girisYapmisKullaniciBilgileriniCek(email: _emailController.text);
                       });
                     }
                   },
@@ -110,24 +105,8 @@ class _LoginPageState extends State<LoginPage>
                     color: ConstantColors.bodyColor,
                   ),
                   onTap: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => RegisterView()));
+                    Navigator.push(context, MaterialPageRoute(builder: (context) => RegisterView()));
                   },
-                ),
-              ),
-              Padding(
-                padding: context.minimumPadding,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    Text(
-                      "Şifremi unuttum",
-                      style: _theme.themeData!.textTheme.bodyText2,
-                      textAlign: TextAlign.right,
-                    ),
-                  ],
                 ),
               ),
             ],
